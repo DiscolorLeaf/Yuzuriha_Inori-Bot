@@ -1,8 +1,8 @@
 # go-cqhttp 默认配置文件
 
 account: # 账号相关
-  uin:  # QQ账号
-  password: '' # 密码为空时使用扫码登录
+  uin: 394213892 # QQ账号
+  password: 'mydecember1136' # 密码为空时使用扫码登录
   encrypt: false  # 是否开启密码加密
   status: 0      # 在线状态 请参考 https://docs.go-cqhttp.org/guide/config.html#在线状态
   relogin: # 重连设置
@@ -85,4 +85,4 @@ database: # 数据库相关设置
 # 连接服务列表
 servers:
   - ws-reverse:
-      universal: ws://127.0.0.1:8080/ws/
+      universal: ws://127.0.0.1:8080/onebot/v11/ws/
