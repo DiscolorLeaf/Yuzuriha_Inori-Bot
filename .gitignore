@@ -145,5 +145,6 @@ go-cqhttp/config.yml
 go-cqhttp/data/
 go-cqhttp/data/*
 go-cqhttp/logs/
+go-cqhttp/session.token
 
 # End of https://www.toptal.com/developers/gitignore/api/python
