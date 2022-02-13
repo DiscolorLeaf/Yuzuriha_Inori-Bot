@@ -20,10 +20,10 @@ async def set_status(bot: Bot, event: GroupMessageEvent):
         await forbid.send('集,拜托了,请使用我吧!')
     else:
         status = False
-        await forbid.send('。。。')
+        await forbid.send('涩涩已关闭')
 
 
-sese = on_message(rule=startswith('涩涩'), priority=10)
+sese = on_message(rule=keyword('祈妹涩涩', '涩涩'), priority=10)
 
 
 @sese.handle()
@@ -38,4 +38,5 @@ async def send_picture(bot: Bot, event: GroupMessageEvent):
         msg: Message = MessageSegment.text(url) + MessageSegment.image(file=p.pic)
         await sese.finish(msg)
     else:
-        await sese.send('不可以涩涩哦')
+        msg: Message = MessageSegment.text('不可以涩涩哦') + MessageSegment.image(file='https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fwww.pianshen.com%2Fimages%2F420%2F7daaed279358c25bbbbab825165ad564.JPEG&refer=http%3A%2F%2Fwww.pianshen.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1647344584&t=b4d67053a250cf5a3690fe621863d99d')
+        await sese.finish(msg)
