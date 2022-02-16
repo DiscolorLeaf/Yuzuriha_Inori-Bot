@@ -1,5 +1,5 @@
 from nonebot import on_message
-from nonebot.adapters.cqhttp import MessageSegment, Message, GroupMessageEvent, GroupRecallNoticeEvent
+from nonebot.adapters.cqhttp import MessageSegment, Message, MessageEvent, GroupRecallNoticeEvent, PrivateMessageEvent
 from nonebot.permission import SUPERUSER
 from nonebot.rule import startswith, keyword
 from nonebot.adapters.onebot.v11 import Bot
@@ -12,7 +12,7 @@ forbid = on_message(rule=keyword('可以涩涩', '不准涩涩'), permission=SUP
 
 
 @forbid.handle()
-async def set_status(bot: Bot, event: GroupMessageEvent):
+async def set_status(bot: Bot, event: MessageEvent):
     command = event.get_plaintext()
     global status
     if command == '可以涩涩':
@@ -27,7 +27,7 @@ sese = on_message(rule=keyword('祈妹涩涩', '涩涩'), priority=10)
 
 
 @sese.handle()
-async def send_picture(bot: Bot, event: GroupMessageEvent):
+async def send_picture(bot: Bot, event: MessageEvent):
     global status, msg_list
     if status:
         p = await get_picture()
