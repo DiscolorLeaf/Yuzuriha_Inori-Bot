@@ -24,6 +24,7 @@ driver.register_adapter(ONEBOT_V11Adapter)
 # As an alternative, you should use command `nb` or modify `pyproject.toml` to load plugins
 nonebot.load_builtin_plugins("echo")
 nonebot.load_plugins("yuzuriha_inori_bot/plugins")
+nonebot.init(apscheduler_autostart=True)
 
 # Modify some config / config depends on loaded configs
 # 
