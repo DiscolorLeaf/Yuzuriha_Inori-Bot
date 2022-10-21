@@ -8,17 +8,20 @@ from httpx import Headers
 
 
 class pic:
-    id: int
-    title: str
-    artist: str
-    pic: str
-    artwork: str
-    tags: list[str]
-    page_count: int
-    create_date: str
+    id: int             # 作品id
+    title: str          # 作品标题
+    artist: str         # 作者
+    pic: str            # 图片访问链接
+    artwork: str        # 图片原始链接
+    tags: list[str]     # 标签
+    page_count: int     # 图片数量
+    create_date: str    # 创建日期
 
 
 def get_headers(referer: str = ''):
+    """
+    获取请求头，可自定义referer字段
+    """
     h = {
         b"Accept": b"*/*",
         b"Accept-Encoding": "gzip, deflate, br",
@@ -34,6 +37,11 @@ def get_headers(referer: str = ''):
 
 
 async def get_pic(ts=time.time() - 2 * 24 * 3600, failed: int = 0):
+    """
+    获取图片信息
+    :param ts: 指定时间戳，用于构造信息查询链接
+    :param failed: 记录请求失败次数，失败次数过多则停止发送请求
+    """
     if failed >= 30:
         return False
     url = f'https://pixiviz-api-hk.pwp.link/v1/illust/rank?' \
@@ -59,6 +67,9 @@ async def get_pic(ts=time.time() - 2 * 24 * 3600, failed: int = 0):
 
 
 async def test_pic(url):
+    """
+    测试图片链接可用性
+    """
     async with httpx.AsyncClient(timeout=None) as client:
         try:
             res = await asyncio.wait_for(client.get(url=url, headers=get_headers()), 5)
@@ -71,6 +82,9 @@ async def test_pic(url):
 
 
 def pic_filter(pics: list):
+    """
+    过滤获取到的图片，去除漫画类型作品
+    """
     for i, p in enumerate(pics):
         if p['type'] == 'manga':
             pics.pop(i)
@@ -78,8 +92,13 @@ def pic_filter(pics: list):
 
 
 async def get_picture(ret=None, count: int = 0, failed: int = 0) -> pic:
+    """
+    重新封装图片信息，无法获取到有效的图片信息则抛出异常
+    """
     if ret is None:
         ret = await get_pic()
+        if ret is False:
+            raise FailedGetPicError('获取图片链接失败')
         ret = ret['illusts']
         ret = pic_filter(ret)
         count = len(ret)
