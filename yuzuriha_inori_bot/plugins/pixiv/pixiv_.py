@@ -8,14 +8,29 @@ from httpx import Headers
 
 
 class pic:
-    id: int             # 作品id
-    title: str          # 作品标题
-    artist: str         # 作者
-    pic: str            # 图片访问链接
-    artwork: str        # 图片原始链接
-    tags: list[str]     # 标签
-    page_count: int     # 图片数量
-    create_date: str    # 创建日期
+    id: int  # 作品id
+    title: str  # 作品标题
+    artist: str  # 作者
+    pic: str  # 预览图链接
+    link: str  # 图片链接
+    pixiv: str  # 图片原始链接
+    tags: list[str]  # 标签
+    page_count: int  # 图片数量
+    create_date: str  # 创建日期
+
+    def __str__(self):
+        tags_str: str = ''
+        tag_num = len(self.tags)
+        for i, tag in enumerate(self.tags):
+            if i < tag_num - 1:
+                tags_str += tag + ', '
+            else:
+                tags_str += tag
+        return '标题: ' + self.title + '\n' \
+               + '作者: ' + self.artist + '\n' \
+               + '标签: ' + tags_str + '\n' \
+               + self.link + '\n' \
+               + self.pixiv
 
 
 def get_headers(referer: str = ''):
@@ -113,7 +128,8 @@ async def get_picture(ret=None, count: int = 0, failed: int = 0) -> pic:
     p.title = single['title']
     p.artist = single['user']['name']
     p.pic = f'https://proxy.pixivel.moe/c/540x540_70/img-master/img/{date}/{p.id}_p0_master1200.jpg'
-    p.artwork = f'https://www.pixiv.net/artworks/{p.id}'
+    p.link = f'https://pixivel.moe/illust/{p.id}'
+    p.pixiv = f'https://www.pixiv.net/artworks/{p.id}'
     p.tags = []
     for tag in single['tags']:
         p.tags.append(tag['name'])
