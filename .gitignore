@@ -141,10 +141,7 @@ dmypy.json
 # Others
 .env.dev
 .env.prod
-go-cqhttp/config.yml
-go-cqhttp/data/
-go-cqhttp/data/*
-go-cqhttp/logs/
-go-cqhttp/session.token
+Dockerfile
+docker-compose.yml
 
 # End of https://www.toptal.com/developers/gitignore/api/python
